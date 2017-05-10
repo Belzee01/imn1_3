@@ -45,7 +45,7 @@ public class MatrixSpace {
         int numberOfObstacles = obstacle.getMyPairs().size();
         List<MyPair> pairs = obstacle.getMyPairs();
 
-        for (int i = 0; i < numberOfObstacles; i++) {
+        for (int i = 0; i < numberOfObstacles-1; i++) {
             if ((pairs.get(i).getX() - pairs.get(i + 1).getX()) < 0.0) {
                 for (double x = pairs.get(i).getX(); x < pairs.get(i + 1).getX(); x += jump) {
                     int indexX = getIndexX(x);
@@ -86,15 +86,18 @@ public class MatrixSpace {
     private void evaluateObstacleRegions() {
         boolean isInObstacleRegion = false;
 
-        for (int i = 0; i < yEdgeLength-1; i++) {
-            for (int j = 0; j < xEdgeLength-1; j++) {
+        //TODO
+        for (int i = 0; i < xEdgeLength-1; i++) {
+            for (int j = 0; j < yEdgeLength-1; j++) {
                 if (this.regionMatrix.getMatrix()[i][j] == 1 && !isInObstacleRegion) {
                     isInObstacleRegion = true;
                 }
                 if (this.regionMatrix.getMatrix()[i][j+1] == 1 && isInObstacleRegion) {
-                    this.regionMatrix.getMatrix()[i][j] = 1;
-                    isInObstacleRegion = false;
-                    j++;
+                    if (this.regionMatrix.getMatrix()[i][j] != 1) {
+                        this.regionMatrix.getMatrix()[i][j] = 1;
+                        isInObstacleRegion = false;
+                        j++;
+                    }
                 }
 
                 if (this.regionMatrix.getMatrix()[i][j+1] == 0 && isInObstacleRegion) {
@@ -105,8 +108,8 @@ public class MatrixSpace {
     }
 
     private void putRegionsInPotentialMatrix() {
-        for (int i = 0; i < yEdgeLength; i++) {
-            for (int j = 0; j < xEdgeLength; j++) {
+        for (int i = 0; i < xEdgeLength; i++) {
+            for (int j = 0; j < yEdgeLength; j++) {
                 if (this.regionMatrix.getMatrix()[i][j] == 1) {
                     this.potentialMatrix.setPotentialPointIsObstacle(i, j,true);
                 }
@@ -116,12 +119,12 @@ public class MatrixSpace {
 
     //TODO
     private int getIndexX(double x) {
-        return (int) ((x + this.box.getxRange().getY()) / this.jump);
+        return (int) ((x) / this.jump)-1;
     }
 
     //TODO
     private int getIndexY(double y) {
-        return (int) ((y + this.box.getyRange().getY()) / this.jump);
+        return (int) ((y) / this.jump)-1;
     }
 
     public IntegerMatrix getIntegerMatrix() {

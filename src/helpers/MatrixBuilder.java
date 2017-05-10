@@ -12,16 +12,21 @@ public class MatrixBuilder {
 
     public static class IntegerMatrix {
         private Integer[][] matrix;
+        private int rows;
+        private int columns;
 
         public IntegerMatrix(int rows, int columns) {
             this.matrix = new Integer[rows][columns];
+            this.rows = rows;
+            this.columns = columns;
+
             initialize();
         }
 
         private void initialize() {
-            for (Integer[] integers:matrix) {
-                for (Integer integer:integers) {
-                    integer = 0;
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    this.matrix[i][j] = 0;
                 }
             }
         }
@@ -37,16 +42,21 @@ public class MatrixBuilder {
 
     public static class PotentialMatrix {
         private PotentialPoint[][] matrix;
+        private int rows;
+        private int columns;
 
         public PotentialMatrix(int rows, int columns) {
             this.matrix = new PotentialPoint[rows][columns];
+            this.rows = rows;
+            this.columns = columns;
+
             initialize();
         }
 
         private void initialize() {
-            for (PotentialPoint[] doubles:matrix) {
-                for (PotentialPoint aDouble:doubles) {
-                    aDouble = new PotentialPoint();
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    this.matrix[i][j] = new PotentialPoint();
                 }
             }
         }
