@@ -6,8 +6,8 @@ public class MatrixBuilder {
         return new IntegerMatrix(rows, columns);
     }
 
-    public static DoubleMatrix buildDoubleMatrix(int rows, int columns) {
-        return new DoubleMatrix(rows, columns);
+    public static PotentialMatrix buildDoubleMatrix(int rows, int columns) {
+        return new PotentialMatrix(rows, columns);
     }
 
     public static class IntegerMatrix {
@@ -35,23 +35,27 @@ public class MatrixBuilder {
         }
     }
 
-    public static class DoubleMatrix {
-        private Double[][] matrix;
+    public static class PotentialMatrix {
+        private PotentialPoint[][] matrix;
 
-        public DoubleMatrix(int rows, int columns) {
-            this.matrix = new Double[rows][columns];
+        public PotentialMatrix(int rows, int columns) {
+            this.matrix = new PotentialPoint[rows][columns];
             initialize();
         }
 
         private void initialize() {
-            for (Double[] doubles:matrix) {
-                for (Double aDouble:doubles) {
-                    aDouble = 0.0;
+            for (PotentialPoint[] doubles:matrix) {
+                for (PotentialPoint aDouble:doubles) {
+                    aDouble = new PotentialPoint();
                 }
             }
         }
 
-        public Double[][] getMatrix() {
+        public void setPotentialPointIsObstacle(int x, int y, Boolean isObstacle) {
+            this.matrix[x][y].setObstacle(isObstacle);
+        }
+
+        public PotentialPoint[][] getMatrix() {
             return matrix;
         }
     }
