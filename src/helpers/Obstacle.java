@@ -17,21 +17,8 @@ public class Obstacle {
         return this;
     }
 
-    public static class MyPair {
-        private double x;
-        private double y;
-
-        public MyPair(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public double getX() {
-            return x;
-        }
-
-        public double getY() {
-            return y;
-        }
+    public List<MyPair> getMyPairs() {
+        return myPairs;
     }
 }
+
