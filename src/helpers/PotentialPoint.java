@@ -23,6 +23,13 @@ public class PotentialPoint {
         this.value = value;
     }
 
+    public PotentialPoint(Double x, Double y) {
+        this.x = x;
+        this.y = y;
+        isObstacle = false;
+        value = 0.0;
+    }
+
     public Double getX() {
         return x;
     }
@@ -53,5 +60,10 @@ public class PotentialPoint {
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

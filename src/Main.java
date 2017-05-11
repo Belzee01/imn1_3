@@ -1,9 +1,8 @@
-import helpers.BoundingBox;
-import helpers.MatrixBuilder;
-import helpers.MyPair;
-import helpers.Obstacle;
+import helpers.*;
 import service.MatrixSpace;
 import service.WariantA;
+
+import java.util.Arrays;
 
 public class Main {
 
@@ -29,6 +28,12 @@ public class Main {
         );
 
         WariantA wariantA = new WariantA(matrixSpace);
+
+        PotentialPoint[][] temp = wariantA.getMatrixSpace().getDoubleMatrix().getMatrix();
+
+        for (PotentialPoint[] p : temp) {
+            System.out.println(Arrays.toString(p));
+        }
 
         System.out.println("Hello World!");
     }

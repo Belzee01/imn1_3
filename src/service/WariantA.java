@@ -8,6 +8,8 @@ public class WariantA {
 
     public WariantA(MatrixSpace matrixSpace) {
         this.matrixSpace = matrixSpace;
+
+        evaluateInitialEdges();
     }
 
     private void evaluateInitialEdges() {
@@ -21,9 +23,21 @@ public class WariantA {
                 if (j == potentialPoints[0].length-1) { // prawy brzeg
                     potentialPoints[i][j].setValue(1.0 * potentialPoints[potentialPoints.length -1 - i][j].getY());
                 }
-                //TODO gorna i dolna krawedz z uwzglednieniem zwezenia
+
+                Double potentialMinMax = potentialPoints[0][0].getValue();
+                Double potentialMinMin = potentialPoints[potentialPoints.length-1][0].getValue();
+
+                // gorny i dolny brzeg
+                if (potentialPoints[i][j].getObstacle()) {
+                    if (i != potentialPoints.length-1) {
+                        potentialPoints[i][j].setValue(potentialMinMax);
+                    } else {
+                        potentialPoints[i][j].setValue(potentialMinMin);
+                    }
+                }
             }
         }
+        matrixSpace.getDoubleMatrix().setMatrix(potentialPoints);
     }
 
     private void calculatePotential() {
@@ -36,5 +50,9 @@ public class WariantA {
                 potentialPoints[i][j].setValue(value);
             }
         }
+    }
+
+    public MatrixSpace getMatrixSpace() {
+        return matrixSpace;
     }
 }

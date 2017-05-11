@@ -73,7 +73,6 @@ public class MatrixSpace {
             }
         }
         evaluateObstacleRegions();
-        printArray();
         putRegionsInPotentialMatrix();
     }
 
@@ -157,5 +156,13 @@ public class MatrixSpace {
 
     public BoundingBox getBox() {
         return box;
+    }
+
+    public void setRegionMatrix(IntegerMatrix regionMatrix) {
+        this.regionMatrix = regionMatrix;
+    }
+
+    public void setPotentialMatrix(PotentialMatrix potentialMatrix) {
+        this.potentialMatrix = potentialMatrix;
     }
 }

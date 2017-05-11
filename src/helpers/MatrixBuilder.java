@@ -53,6 +53,7 @@ public class MatrixBuilder {
             initialize();
         }
 
+        //TODO setting x and y by jump parameter
         private void initialize() {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
@@ -63,6 +64,10 @@ public class MatrixBuilder {
 
         public void setPotentialPointIsObstacle(int x, int y, Boolean isObstacle) {
             this.matrix[x][y].setObstacle(isObstacle);
+        }
+
+        public void setMatrix(PotentialPoint[][] matrix) {
+            this.matrix = matrix;
         }
 
         public PotentialPoint[][] getMatrix() {
