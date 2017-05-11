@@ -76,12 +76,6 @@ public class MatrixSpace {
         putRegionsInPotentialMatrix();
     }
 
-    private void printRegions() {
-        for (Integer[] integers:this.regionMatrix.getMatrix()) {
-            System.out.println(Arrays.toString(integers));
-        }
-    }
-
     private void evaluateObstacleRegions() {
         for (int i = 0; i < rows; i++) {
             boolean isIn = false;
@@ -110,12 +104,10 @@ public class MatrixSpace {
         }
     }
 
-    //TODO
     private int getIndexX(double x) {
         return (int) ((x) / this.jump);
     }
 
-    //TODO
     private int getIndexY(double y) {
         return rows - (int) ((y) / this.jump);
     }
@@ -126,5 +118,13 @@ public class MatrixSpace {
 
     public PotentialMatrix getDoubleMatrix() {
         return potentialMatrix;
+    }
+
+    public Double getJump() {
+        return jump;
+    }
+
+    public BoundingBox getBox() {
+        return box;
     }
 }

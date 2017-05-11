@@ -3,6 +3,7 @@ import helpers.MatrixBuilder;
 import helpers.MyPair;
 import helpers.Obstacle;
 import service.MatrixSpace;
+import service.WariantA;
 
 import java.util.Arrays;
 
@@ -29,12 +30,8 @@ public class Main {
                         .addNewObstaclePoint(85.0, 100.0)
         );
 
-        System.out.println("Hello World!");
-    }
+        WariantA wariantA = new WariantA(matrixSpace);
 
-    public static void printArray(int[][] array) {
-        for (int[] ints : array) {
-            System.out.println(Arrays.toString(ints));
-        }
+        System.out.println("Hello World!");
     }
 }
