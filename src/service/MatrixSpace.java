@@ -30,8 +30,8 @@ public class MatrixSpace {
         this.obstacles = new ArrayList<>();
         this.box = box;
 
-        this.columns = (int) ((box.getxRange().getY() - box.getxRange().getX()) / jump)+1;
-        this.rows = (int) ((box.getyRange().getY() - box.getyRange().getX()) / jump)+1;
+        this.columns = (int) ((box.getxRange().getY() - box.getxRange().getX()) / jump) + 1;
+        this.rows = (int) ((box.getyRange().getY() - box.getyRange().getX()) / jump) + 1;
     }
 
     public MatrixSpace addObstacle(Obstacle obstacle) {
@@ -45,7 +45,7 @@ public class MatrixSpace {
         int numberOfObstacles = obstacle.getMyPairs().size();
         List<MyPair> pairs = obstacle.getMyPairs();
 
-        for (int i = 0; i < numberOfObstacles-1; i++) {
+        for (int i = 0; i < numberOfObstacles - 1; i++) {
             if ((pairs.get(i).getX() - pairs.get(i + 1).getX()) < 0.0) {
                 for (double x = pairs.get(i).getX(); x < pairs.get(i + 1).getX(); x += jump) {
                     int indexX = getIndexX(x);
@@ -73,24 +73,55 @@ public class MatrixSpace {
             }
         }
         evaluateObstacleRegions();
+        printArray();
         putRegionsInPotentialMatrix();
     }
 
     private void evaluateObstacleRegions() {
         for (int i = 0; i < rows; i++) {
-            boolean isIn = false;
-            for (int j = 1; j < columns-1; j++) {
-                if (isIn) {
+            for (int j = 0; j < columns; j++) {
+                if (this.regionMatrix.getMatrix()[i][j] == 0 && checkIfFourNeighbors(this.regionMatrix.getMatrix(), i, j)) {
                     this.regionMatrix.getMatrix()[i][j] = 1;
                 }
-                if (this.regionMatrix.getMatrix()[i][j] == 0 && this.regionMatrix.getMatrix()[i][j-1] == 1) {
-                    isIn = true;
-                    this.regionMatrix.getMatrix()[i][j] = 1;
-                }
-                if (this.regionMatrix.getMatrix()[i][j+1] == 0 && this.regionMatrix.getMatrix()[i][j] == 1 && isIn) {
-                    isIn = false;
-                }
+                this.regionMatrix.getMatrix()[0][j] = 1;
+                this.regionMatrix.getMatrix()[rows-1][j] = 1;
             }
+        }
+    }
+
+    private  boolean checkIfFourNeighbors(Integer[][] array, int x, int y) {
+        int count = 0;
+        for (int i = x+1; i < array.length; i++) { // przeglad w dol
+            if (array[i][y] == 1){
+                count++;
+                break;
+            }
+        }
+        for (int i = x-1; i >-1; i--) { // przeglad w gore
+            if (array[i][y] == 1){
+                count++;
+                break;
+            }
+        }
+        for (int i = y+1; i < array[0].length; i++) { // przeglad w prawo
+            if (array[x][i] == 1) {
+                count++;
+                break;
+            }
+        }
+        for (int i = y-1; i > -1; i--) { // przeglad w prawo
+            if (array[x][i] == 1){
+                count++;
+                break;
+            }
+        }
+
+        return count == 4;
+    }
+
+    private void printArray() {
+        for (Integer[] i : this.regionMatrix.getMatrix()) {
+            System.out.println(Arrays.toString(i));
         }
     }
 
@@ -98,7 +129,7 @@ public class MatrixSpace {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (this.regionMatrix.getMatrix()[i][j] == 1) {
-                    this.potentialMatrix.setPotentialPointIsObstacle(i, j,true);
+                    this.potentialMatrix.setPotentialPointIsObstacle(i, j, true);
                 }
             }
         }
