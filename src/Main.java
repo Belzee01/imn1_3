@@ -29,6 +29,8 @@ public class Main {
 
         WariantA wariantA = new WariantA(matrixSpace);
 
+        wariantA.calculatePotential();
+
         PotentialPoint[][] temp = wariantA.getMatrixSpace().getDoubleMatrix().getMatrix();
 
         for (PotentialPoint[] p : temp) {

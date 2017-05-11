@@ -5,6 +5,7 @@ import helpers.MatrixBuilder.IntegerMatrix;
 import helpers.MatrixBuilder.PotentialMatrix;
 import helpers.MyPair;
 import helpers.Obstacle;
+import helpers.PotentialPoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,12 +33,26 @@ public class MatrixSpace {
 
         this.columns = (int) ((box.getxRange().getY() - box.getxRange().getX()) / jump) + 1;
         this.rows = (int) ((box.getyRange().getY() - box.getyRange().getX()) / jump) + 1;
+
+        evaluateXY();
     }
 
     public MatrixSpace addObstacle(Obstacle obstacle) {
         this.obstacles.add(obstacle);
         evaluateObstacleRegions(obstacle);
         return this;
+    }
+
+    private void evaluateXY() {
+        PotentialPoint[][] potentialPoints = potentialMatrix.getMatrix();
+        for (int i = rows-1; i > -1; i--) {
+            for (int j = 0; j < columns; j++) {
+                potentialPoints[i][j].setX(j+1*jump);
+                potentialPoints[i][j].setY(i+1*jump);
+            }
+        }
+
+        potentialMatrix.setMatrix(potentialPoints);
     }
 
     private void evaluateObstacleRegions(Obstacle obstacle) {

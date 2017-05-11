@@ -40,14 +40,16 @@ public class WariantA {
         matrixSpace.getDoubleMatrix().setMatrix(potentialPoints);
     }
 
-    private void calculatePotential() {
+    public void calculatePotential() {
         PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
 
         for (int i = 1; i < potentialPoints.length - 1; i++) {
             for (int j = 1; j < potentialPoints[0].length - 1; j++) {
-                Double value = (potentialPoints[i - 1][j].getValue() + potentialPoints[i][j - 1].getValue() +
-                        potentialPoints[i + 1][j].getValue() + potentialPoints[i][j + 1].getValue()) / 4.0;
-                potentialPoints[i][j].setValue(value);
+                if (!matrixSpace.getDoubleMatrix().getMatrix()[i][j].getObstacle()) {
+                    Double value = (potentialPoints[i - 1][j].getValue() + potentialPoints[i][j - 1].getValue() +
+                            potentialPoints[i + 1][j].getValue() + potentialPoints[i][j + 1].getValue()) / 4.0;
+                    potentialPoints[i][j].setValue(value);
+                }
             }
         }
     }
