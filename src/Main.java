@@ -4,13 +4,16 @@ import helpers.MyPair;
 import helpers.Obstacle;
 import service.MatrixSpace;
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
 
         MatrixSpace matrixSpace = new MatrixSpace(
-                MatrixBuilder.buildIntegerMatrix(200, 100),
-                MatrixBuilder.buildDoubleMatrix(200, 100),
+                //                                  rows          columns
+                MatrixBuilder.buildIntegerMatrix(100, 200),
+                MatrixBuilder.buildDoubleMatrix(100, 200),
                 new BoundingBox(new MyPair(1.0, 200.0), new MyPair(1.0, 100.0)),
                 1.0
         );
@@ -27,5 +30,11 @@ public class Main {
         );
 
         System.out.println("Hello World!");
+    }
+
+    public static void printArray(int[][] array) {
+        for (int[] ints : array) {
+            System.out.println(Arrays.toString(ints));
+        }
     }
 }
