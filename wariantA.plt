@@ -36,3 +36,13 @@ unset pm3d
 set title 'Wartosc calki w kolejnych iteracjach'
 set log x
 plot 'warA_integral.dat' with line
+
+set terminal png size 800,600
+set o 'IntegralZad2.png'
+set xl 'iteracja'
+set yl 'wrtosc calki'
+set size ratio -1
+unset pm3d
+set title 'Wartosc calki w kolejnych iteracjach'
+set log x
+plot 'warA_integral2.dat' with line

@@ -6,16 +6,25 @@ import helpers.PotentialPoint;
 
 public class WariantA {
 
+    enum TYPE {
+        NEUMANN,
+        DIRCHLET,
+        NONE
+    }
+
     private MatrixSpace matrixSpace;
 
     private IterationIntegralContainer iterationIntegralContainer;
 
     private Obstacle obstaclePoints;
 
+    private TYPE type;
+
     // Dla zadania 1
     public WariantA(MatrixSpace matrixSpace) {
         this.matrixSpace = matrixSpace;
         this.iterationIntegralContainer = new IterationIntegralContainer();
+        this.type = TYPE.NONE;
 
         evaluateInitialEdges();
     }
@@ -25,6 +34,7 @@ public class WariantA {
         this.matrixSpace = matrixSpace;
         this.iterationIntegralContainer = new IterationIntegralContainer();
         this.obstaclePoints = obstaclePoints;
+        this.type = TYPE.NEUMANN;
 
         evaluateInitialEdgesVonNuemann();
     }
@@ -64,7 +74,10 @@ public class WariantA {
     }
 
     private void calculatePotential() {
-        evaluateEdgePotential();
+        if (type == TYPE.NEUMANN) {
+            evaluateEdgePotential();
+        }
+
         PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
 
         for (int i = 1; i < potentialPoints.length - 1; i++) {
@@ -109,7 +122,7 @@ public class WariantA {
             Double newIntegralValue = calculateIntegralAtIteration();
             this.iterationIntegralContainer.add(k++, newIntegralValue);
 
-            diff = Math.abs(newIntegralValue - currentIntegralValue);
+            diff = Math.abs(newIntegralValue - currentIntegralValue)/currentIntegralValue;
             currentIntegralValue = newIntegralValue;
 
         } while (diff > 10e-8);

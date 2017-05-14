@@ -31,21 +31,21 @@ public class Main {
 
         matrixSpace.addObstacle(obstacle);
 
-//        WariantA wariantA = new WariantA(matrixSpace);
-//
-//        System.out.println(wariantA.calculateIntegral());
-//
-//        PotentialPoint[][] temp = wariantA.getMatrixSpace().getDoubleMatrix().getMatrix();
-//
-//        for (PotentialPoint[] p : temp) {
-//            System.out.println(Arrays.toString(p));
-//        }
-//
-//        CustomFileWriter.writeToFile(
-//                new AdvancedOutputFile(temp, boundingBox, 1.0, "warA_pot.dat")
-//        );
-//
-//        CustomFileWriter.writeToFile(wariantA.getIterationIntegralContainer(), "warA_integral.dat");
+        WariantA wariantA = new WariantA(matrixSpace);
+
+        System.out.println(wariantA.calculateIntegral());
+
+        PotentialPoint[][] temp = wariantA.getMatrixSpace().getDoubleMatrix().getMatrix();
+
+        for (PotentialPoint[] p : temp) {
+            System.out.println(Arrays.toString(p));
+        }
+
+        CustomFileWriter.writeToFile(
+                new AdvancedOutputFile(temp, boundingBox, 1.0, "warA_pot.dat")
+        );
+
+        CustomFileWriter.writeToFile(wariantA.getIterationIntegralContainer(), "warA_integral.dat");
 
 
         ///Zadanie 2
@@ -67,11 +67,9 @@ public class Main {
 
         WariantA wariantA1 = new WariantA(matrixSpace, obstaclePoints);
 
-        //wariantA1.evaluateEdgePotential();
-
         System.out.println(wariantA1.calculateIntegral());
 
-        PotentialPoint[][] temp = wariantA1.getMatrixSpace().getDoubleMatrix().getMatrix();
+        temp = wariantA1.getMatrixSpace().getDoubleMatrix().getMatrix();
 
         for (PotentialPoint[] p : temp) {
             for (int i = 0; i < p.length; i++) {
@@ -83,6 +81,9 @@ public class Main {
         CustomFileWriter.writeToFile(
                 new AdvancedOutputFile(temp, boundingBox, 1.0, "warA_pot2.dat")
         );
+
+        CustomFileWriter.writeToFile(wariantA1.getIterationIntegralContainer(), "warA_integral2.dat");
+
 
         System.out.println("Hello World!");
     }
