@@ -195,21 +195,21 @@ public class WariantA {
         int jA = potentialPoints.length - (int) (this.obstaclePoints.getMyPairs().get(0).getY() / matrixSpace.getJump());
 
         potentialPoints[jA][iA].setValue(
-                (potentialPoints[jA][iA-1].getValue() - potentialPoints[jA+1][iA].getValue())/2.0
+                (potentialPoints[jA][iA-1].getValue() + potentialPoints[jA+1][iA].getValue())/2.0
         );
 
         int iC = (int) (this.obstaclePoints.getMyPairs().get(2).getX() / matrixSpace.getJump())-1;
         int jC = potentialPoints.length - (int) (this.obstaclePoints.getMyPairs().get(2).getY() / matrixSpace.getJump());
 
         potentialPoints[jC][iC].setValue(
-                (potentialPoints[jC][iC-1].getValue() - potentialPoints[jC+1][iC].getValue())/2.0
+                (potentialPoints[jC][iC-1].getValue() + potentialPoints[jC+1][iC].getValue())/2.0
         );
 
         int iD = (int) (this.obstaclePoints.getMyPairs().get(3).getX() / matrixSpace.getJump())-1;
         int jD = potentialPoints.length - (int) (this.obstaclePoints.getMyPairs().get(3).getY() / matrixSpace.getJump());
 
         potentialPoints[jD][iD].setValue(
-                (potentialPoints[jD][iD+1].getValue() - potentialPoints[jD+1][iD].getValue())/2.0
+                (potentialPoints[jD][iD+1].getValue() + potentialPoints[jD+1][iD].getValue())/2.0
         );
 
         matrixSpace.getDoubleMatrix().setMatrix(potentialPoints);

@@ -67,7 +67,9 @@ public class Main {
 
         WariantA wariantA1 = new WariantA(matrixSpace, obstaclePoints);
 
-        System.out.println(wariantA1.calculateIntegral());
+        wariantA1.evaluateEdgePotential();
+
+        //System.out.println(wariantA1.calculateIntegral());
 
         PotentialPoint[][] temp = wariantA1.getMatrixSpace().getDoubleMatrix().getMatrix();
 
