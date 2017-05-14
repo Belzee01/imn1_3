@@ -175,8 +175,8 @@ public class WariantA {
 
             int temp = (int) (potentialPoints.length - this.obstaclePoints.getMyPairs().get(0).getY() / matrixSpace.getJump());
 
-            potentialPoints[temp-1][x].setValue(
-                    potentialPoints[temp][x].getValue()
+            potentialPoints[temp][x].setValue(
+                    potentialPoints[temp+1][x].getValue()
             );
         }
 
@@ -186,8 +186,8 @@ public class WariantA {
 
             int temp = (int) (potentialPoints.length - this.obstaclePoints.getMyPairs().get(2).getY() / matrixSpace.getJump());
 
-            potentialPoints[temp-1][x].setValue(
-                    potentialPoints[temp][x].getValue()
+            potentialPoints[temp][x].setValue(
+                    potentialPoints[temp+1][x].getValue()
             );
         }
 

@@ -67,14 +67,17 @@ public class Main {
 
         WariantA wariantA1 = new WariantA(matrixSpace, obstaclePoints);
 
-        wariantA1.evaluateEdgePotential();
+        //wariantA1.evaluateEdgePotential();
 
-        //System.out.println(wariantA1.calculateIntegral());
+        System.out.println(wariantA1.calculateIntegral());
 
         PotentialPoint[][] temp = wariantA1.getMatrixSpace().getDoubleMatrix().getMatrix();
 
         for (PotentialPoint[] p : temp) {
-            System.out.println(Arrays.toString(p));
+            for (int i = 0; i < p.length; i++) {
+                System.out.print(p[i] + "\t\t");
+            }
+            System.out.println();
         }
 
         CustomFileWriter.writeToFile(
