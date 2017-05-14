@@ -47,8 +47,8 @@ public class MatrixSpace {
         PotentialPoint[][] potentialPoints = potentialMatrix.getMatrix();
         for (int i = rows-1; i > -1; i--) {
             for (int j = 0; j < columns; j++) {
-                potentialPoints[i][j].setX(j+1*jump);
-                potentialPoints[i][j].setY(i+1*jump);
+                potentialPoints[i][j].setX((j+1)*jump);
+                potentialPoints[i][j].setY(((rows-i))*jump);
             }
         }
 
@@ -97,8 +97,6 @@ public class MatrixSpace {
                 if (this.regionMatrix.getMatrix()[i][j] == 0 && checkIfFourNeighbors(this.regionMatrix.getMatrix(), i, j)) {
                     this.regionMatrix.getMatrix()[i][j] = 1;
                 }
-                this.regionMatrix.getMatrix()[0][j] = 1;
-                this.regionMatrix.getMatrix()[rows-1][j] = 1;
             }
         }
     }
@@ -143,7 +141,7 @@ public class MatrixSpace {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (this.regionMatrix.getMatrix()[i][j] == 1) {
-                    this.potentialMatrix.setPotentialPointIsObstacle(i, j, true);
+                    this.potentialMatrix.setPotentialPointIsObstacle(i, j-1, true);
                 }
             }
         }
@@ -179,5 +177,13 @@ public class MatrixSpace {
 
     public void setPotentialMatrix(PotentialMatrix potentialMatrix) {
         this.potentialMatrix = potentialMatrix;
+    }
+
+    public Integer getRows() {
+        return rows;
+    }
+
+    public Integer getColumns() {
+        return columns;
     }
 }

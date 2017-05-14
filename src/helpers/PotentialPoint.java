@@ -1,5 +1,8 @@
 package helpers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PotentialPoint {
 
     private Double x;
@@ -67,3 +70,4 @@ public class PotentialPoint {
         return String.valueOf(value);
     }
 }
+
