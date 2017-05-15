@@ -31,8 +31,8 @@ public class MatrixSpace {
         this.obstacles = new ArrayList<>();
         this.box = box;
 
-        this.columns = (int) ((box.getxRange().getY() - box.getxRange().getX() + 1.0) / jump);
-        this.rows = (int) ((box.getyRange().getY() - box.getyRange().getX() + 1.0) / jump);
+        this.columns = (int) ((box.getxRange().getY() - box.getxRange().getX()) / jump)+1;
+        this.rows = (int) ((box.getyRange().getY() - box.getyRange().getX()) / jump)+1;
 
         evaluateXY();
     }
@@ -158,7 +158,7 @@ public class MatrixSpace {
     }
 
     private int getIndexY(double y) {
-        return rows - (int) ((y+1.0) / this.jump); // for wariant A +0.0
+        return rows - (int) ((y) / this.jump) -1; // for wariant A +0.0
     }
 
     public IntegerMatrix getIntegerMatrix() {

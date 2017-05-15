@@ -42,52 +42,52 @@ public class WariantB {
     public void evaluateInitialEdgeValues() {
         PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
 
-        for (int i = 0; i <=  50.0/matrixSpace.getJump(); i++) { //lewy a
+        for (int i = 0; i <=  0.5/matrixSpace.getJump(); i++) { //lewy a
             int y = matrixSpace.getRows() - i -1;
             potentialPoints[y][0].setValue(
-                    1.0 * (i - 0.0)
+                    1.0 * (i*matrixSpace.getJump() - 0.0)
             );
         }
 
-        for (int i = (int) (150.0/matrixSpace.getJump()); i <=  200.0/matrixSpace.getJump(); i++) { //prawy b
+        for (int i = (int) (1.5/matrixSpace.getJump()); i <=  2.0/matrixSpace.getJump(); i++) { //prawy b
             int y = matrixSpace.getRows() - i-1;
             potentialPoints[y][matrixSpace.getColumns()-1].setValue(
-                    1.0 * (i - (150.0/matrixSpace.getJump()))
+                    1.0 * (i*matrixSpace.getJump() - 1.5)
             );
         }
 
         //dolny
-        for (int i = 0; i <=  300.0/matrixSpace.getJump(); i++) { //dolny
+        for (int i = 0; i <=  3.0/matrixSpace.getJump(); i++) { //dolny
             potentialPoints[matrixSpace.getRows()-1][i].setValue(
                     potentialPoints[0][0].getValue()
             );
         }
-        for (int i = 0; i <=  150.0/matrixSpace.getJump(); i++) { //dolny
-            potentialPoints[matrixSpace.getRows()-i-1][(int) (300.0/matrixSpace.getJump())].setValue(
+        for (int i = 0; i <=  1.5/matrixSpace.getJump(); i++) { //dolny
+            potentialPoints[matrixSpace.getRows()-i-1][(int) (3.0/matrixSpace.getJump())].setValue(
                     potentialPoints[0][0].getValue()
             );
         }
-        for (int i = (int) (300.0/matrixSpace.getJump()); i <=  400.0/matrixSpace.getJump(); i++) { //dolny
-            potentialPoints[(int) (matrixSpace.getRows()-150.0/matrixSpace.getJump())][i].setValue(
+        for (int i = (int) (3.0/matrixSpace.getJump()); i <=  4.0/matrixSpace.getJump(); i++) { //dolny
+            potentialPoints[(int) (matrixSpace.getRows()-1.5/matrixSpace.getJump())][i].setValue(
                     potentialPoints[0][0].getValue()
             );
         }
 
         //gorny
-        for (int i = 0; i <=  100.0/matrixSpace.getJump(); i++) { //dolny
-            int y = (int) (matrixSpace.getRows() - 50.0/matrixSpace.getJump());
+        for (int i = 0; i <=  1.0/matrixSpace.getJump(); i++) { //dolny
+            int y = (int) (matrixSpace.getRows() - 0.5/matrixSpace.getJump());
             potentialPoints[y-1][i].setValue(
                     potentialPoints[y-1][0].getValue()
             );
         }
-        for (int i = (int) (50.0/matrixSpace.getJump()); i <=  200.0/matrixSpace.getJump(); i++) { //dolny
-            int y = (int) (matrixSpace.getRows() - 50.0/matrixSpace.getJump());
-            potentialPoints[matrixSpace.getRows()-i-1][(int) (100.0/matrixSpace.getJump())].setValue(
+        for (int i = (int) (0.5/matrixSpace.getJump()); i <=  2.0/matrixSpace.getJump(); i++) { //dolny
+            int y = (int) (matrixSpace.getRows() - 0.5/matrixSpace.getJump());
+            potentialPoints[matrixSpace.getRows()-i-1][(int) (1.0/matrixSpace.getJump())].setValue(
                     potentialPoints[y-1][0].getValue()
             );
         }
-        for (int i = (int) (100.0/matrixSpace.getJump()); i <=  400.0/matrixSpace.getJump(); i++) { //dolny
-            int y = (int) (matrixSpace.getRows() - 50.0/matrixSpace.getJump());
+        for (int i = (int) (1.0/matrixSpace.getJump()); i <=  4.0/matrixSpace.getJump(); i++) { //dolny
+            int y = (int) (matrixSpace.getRows() - 0.5/matrixSpace.getJump());
             potentialPoints[0][i].setValue(
                     potentialPoints[y-1][0].getValue()
             );
@@ -109,6 +109,7 @@ public class WariantB {
     }
 
     private Double calculateIntegralAtIteration() {
+
         PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
 
         Double a = 0.0;

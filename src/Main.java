@@ -86,35 +86,35 @@ public class Main {
     }
 
     public static void zestawB() {
-        final BoundingBox boundingBox = new BoundingBox(new MyPair(0.0, 400.0), new MyPair(0.0, 200.0));
+        final BoundingBox boundingBox = new BoundingBox(new MyPair(0.0, 4.0), new MyPair(0.0, 2.0));
 
-        final Double jump = 1.0;
+        final Double jump = 0.01;
 
         MatrixSpace matrixSpace = new MatrixSpace(
                 //                                  rows          columns
-                MatrixBuilder.buildIntegerMatrix((int) (201/jump), (int) (401/jump)),
-                MatrixBuilder.buildDoubleMatrix((int) (201/jump), (int) (401/jump)),
+                MatrixBuilder.buildIntegerMatrix(201, (int) 401),
+                MatrixBuilder.buildDoubleMatrix(201, 401),
                 boundingBox,
                 jump
         );
 
         final Obstacle obstacle1 = new Obstacle()
-                .addNewObstaclePoint(0.0, 50.0)
-                .addNewObstaclePoint(100.0, 50.0)
-                .addNewObstaclePoint(100.0, 200.0)
-                .addNewObstaclePoint(0.0, 200.0)
-                .addNewObstaclePoint(0.0, 50.0);
+                .addNewObstaclePoint(0.0, 0.5)
+                .addNewObstaclePoint(1.0, 0.5)
+                .addNewObstaclePoint(1.0, 2.0)
+                .addNewObstaclePoint(0.0, 2.0)
+                .addNewObstaclePoint(0.0, 0.5);
 
         final Obstacle obstacle2 = new Obstacle()
-                .addNewObstaclePoint(300.0, 0.0)
-                .addNewObstaclePoint(400.0, 0.0)
-                .addNewObstaclePoint(400.0, 150.0)
-                .addNewObstaclePoint(300.0, 150.0)
-                .addNewObstaclePoint(300.0, 0.0);
+                .addNewObstaclePoint(3.0, 0.0)
+                .addNewObstaclePoint(4.0, 0.0)
+                .addNewObstaclePoint(4.0, 1.5)
+                .addNewObstaclePoint(3.0, 1.5)
+                .addNewObstaclePoint(3.0, 0.0);
 
         matrixSpace.addObstacle(obstacle1).addObstacle(obstacle2);
 
-        WariantB wariantB = new WariantB(matrixSpace, 1.99);
+        WariantB wariantB = new WariantB(matrixSpace, 1.9);
 
         wariantB.calculateIntegral();
 
