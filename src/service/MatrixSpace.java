@@ -39,6 +39,7 @@ public class MatrixSpace {
 
     public MatrixSpace addObstacle(Obstacle obstacle) {
         evaluateObstacleRegions(obstacle);
+        System.out.println("Added obstacle");
         return this;
     }
 
@@ -56,6 +57,7 @@ public class MatrixSpace {
 
     private void evaluateObstacleRegions(Obstacle obstacle) {
 
+        System.out.println("Calculating obstacles");
         int numberOfObstacles = obstacle.getMyPairs().size();
         List<MyPair> pairs = obstacle.getMyPairs();
 
@@ -86,11 +88,13 @@ public class MatrixSpace {
                 }
             }
         }
+        System.out.println("Finished calculating obstacles");
         fillObstacles();
         putRegionsInPotentialMatrix();
     }
 
     private void fillObstacles() {
+        System.out.println("Filling obstacles");
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (this.regionMatrix.getMatrix()[i][j] == 0 && checkIfFourNeighbors(this.regionMatrix.getMatrix(), i, j)) {
@@ -98,6 +102,7 @@ public class MatrixSpace {
                 }
             }
         }
+        System.out.println("Filled obstacles");
     }
 
     private  boolean checkIfFourNeighbors(Integer[][] array, int x, int y) {
@@ -137,6 +142,7 @@ public class MatrixSpace {
     }
 
     private void putRegionsInPotentialMatrix() {
+        System.out.println("Setting obstacle flag");
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (this.regionMatrix.getMatrix()[i][j] == 1) {
@@ -144,6 +150,7 @@ public class MatrixSpace {
                 }
             }
         }
+        System.out.println("All obstacle flags set");
     }
 
     private int getIndexX(double x) {

@@ -115,6 +115,25 @@ public class Main {
         matrixSpace.addObstacle(obstacle1).addObstacle(obstacle2);
 
         WariantB wariantB = new WariantB(matrixSpace, 1.99);
+
+        wariantB.calculateIntegral();
+
+        PotentialPoint[][] potentialPoints = wariantB.getMatrixSpace().getDoubleMatrix().getMatrix();
+
+        for (int i = 0; i < potentialPoints.length; i++) {
+            for (int j = 0; j < potentialPoints[0].length; j++) {
+                System.out.print(potentialPoints[i][j].getValue() + "\t\t");
+            }
+            System.out.println();
+        }
+
+        PotentialPoint[][] temp = wariantB.getMatrixSpace().getDoubleMatrix().getMatrix();
+
+        CustomFileWriter.writeToFile(
+                new AdvancedOutputFile(temp, boundingBox, jump, "warB_pot.dat")
+        );
+
+        CustomFileWriter.writeToFile(wariantB.getIterationIntegralContainer(), "warB_integral.dat");
     }
 
     public static void main(String[] args) {
