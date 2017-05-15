@@ -110,10 +110,11 @@ public class WariantA {
     }
 
     public Double calculateIntegral() {
+        calculatePotential();
         Double currentIntegralValue = calculateIntegralAtIteration();
         Double diff = 0.0;
 
-        int k = 0;
+        int k = 1;
         if (this.iterationIntegralContainer.getMyPairs().size() != 0)
             k = this.iterationIntegralContainer.getMyPairs().get(this.iterationIntegralContainer.getMyPairs().size() - 1).getIteration();
         this.iterationIntegralContainer.add(k++, currentIntegralValue);
