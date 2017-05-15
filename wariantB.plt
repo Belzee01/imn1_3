@@ -20,4 +20,5 @@ set size ratio -1
 unset pm3d
 set title 'Wartosc calki w kolejnych iteracjach'
 set log x
+set log y
 plot 'warB_integral.dat' with line
