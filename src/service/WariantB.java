@@ -5,7 +5,7 @@ import helpers.Obstacle;
 import helpers.PotentialPoint;
 
 public class WariantB {
-    enum TYPE {
+    public enum TYPE {
         NEUMANN,
         DIRCHLET,
         NONE
@@ -30,13 +30,14 @@ public class WariantB {
         evaluateInitialEdgeValues();
     }
 
-    public WariantB(MatrixSpace matrixSpace, Obstacle obstaclePoints, Double omega) {
+    public WariantB(MatrixSpace matrixSpace, Double omega, TYPE type) {
         this.matrixSpace = matrixSpace;
         this.obstaclePoints = obstaclePoints;
         this.iterationIntegralContainer = new IterationIntegralContainer();
+        this.type = TYPE.NEUMANN;
 
         this.omega = omega;
-        evaluateInitialEdgeValues();
+        evaluateEdgeZad2();
     }
 
     public void evaluateInitialEdgeValues() {
@@ -92,9 +93,14 @@ public class WariantB {
                     potentialPoints[y-1][0].getValue()
             );
         }
+        matrixSpace.getDoubleMatrix().setMatrix(potentialPoints);
     }
 
     public void overRelaxation() {
+        if (type == TYPE.NEUMANN) {
+            evaluateEdgeNeumann();
+        }
+
         PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
 
         for (int i = 1; i < potentialPoints.length - 1; i++) {
@@ -106,6 +112,7 @@ public class WariantB {
                 }
             }
         }
+        matrixSpace.getDoubleMatrix().setMatrix(potentialPoints);
     }
 
     private Double calculateIntegralAtIteration() {
@@ -128,6 +135,7 @@ public class WariantB {
     }
 
     public Double calculateIntegral() {
+        overRelaxation();
         System.out.println("Calculating integral");
         Double currentIntegralValue = calculateIntegralAtIteration();
         Double diff = 0.0;
@@ -168,5 +176,77 @@ public class WariantB {
 
     public Double getOmega() {
         return omega;
+    }
+
+    public void evaluateEdgeZad2() {
+        evaluateEdgeDirchlet();
+        evaluateEdgeNeumann();
+    }
+
+    public void evaluateEdgeDirchlet() {
+        PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
+
+        for (int i = 0; i <=  0.5/matrixSpace.getJump(); i++) { //lewy a
+            int y = matrixSpace.getRows() - i -1;
+            potentialPoints[y][0].setValue(
+                    1.0 * 0.0
+            );
+        }
+
+        for (int i = (int) (1.5/matrixSpace.getJump()); i <=  2.0/matrixSpace.getJump(); i++) { //prawy b
+            int y = matrixSpace.getRows() - i-1;
+            potentialPoints[y][matrixSpace.getColumns()-1].setValue(
+                    1.0 * (matrixSpace.getJump() * 400)
+            );
+        }
+        matrixSpace.getDoubleMatrix().setMatrix(potentialPoints);
+    }
+
+    public void evaluateEdgeNeumann() {
+        PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
+
+        for (int i = 1; i <=  99; i++) { //lewy a
+            int y = 200 - 50;
+            potentialPoints[y][i].setValue(
+                    potentialPoints[y+1][i].getValue()
+            );
+        }
+
+        for (int i = 199; i >  51; i--) { //lewy a
+            int x = 101;
+            potentialPoints[i][x].setValue(
+                    potentialPoints[i][x+1].getValue()
+            );
+        }
+
+        for (int i = 101; i <=  399; i++) { //lewy a
+            int y = 0;
+            potentialPoints[y][i].setValue(
+                    potentialPoints[y+1][i].getValue()
+            );
+        }
+
+        for (int i = 1; i <=  299; i++) { //lewy a
+            int y = 200;
+            potentialPoints[y][i].setValue(
+                    potentialPoints[y-1][i].getValue()
+            );
+        }
+
+        for (int i = 199; i >  51; i--) { //lewy a
+            int x = 300;
+            potentialPoints[i][x].setValue(
+                    potentialPoints[i-1][x].getValue()
+            );
+        }
+
+        for (int i = 301; i <=  399; i++) { //lewy a
+            int y = 50;
+            potentialPoints[y][i].setValue(
+                    potentialPoints[y-1][i].getValue()
+            );
+        }
+
+        matrixSpace.getDoubleMatrix().setMatrix(potentialPoints);
     }
 }

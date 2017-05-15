@@ -40,7 +40,6 @@ public class MatrixSpace {
     public MatrixSpace addObstacle(Obstacle obstacle) {
         evaluateObstacleRegions(obstacle);
         System.out.println("Added obstacle");
-        printArray();
         return this;
     }
 
