@@ -3,13 +3,13 @@ import fileproc.CustomFileWriter;
 import helpers.*;
 import service.MatrixSpace;
 import service.WariantA;
+import service.WariantB;
 
 import java.util.Arrays;
 
 public class Main {
 
-    public static void main(String[] args) {
-
+    public static void zestawA() {
         final BoundingBox boundingBox = new BoundingBox(new MyPair(1.0, 200.0), new MyPair(1.0, 100.0));
 
         MatrixSpace matrixSpace = new MatrixSpace(
@@ -83,7 +83,44 @@ public class Main {
         );
 
         CustomFileWriter.writeToFile(wariantA1.getIterationIntegralContainer(), "warA_integral2.dat");
+    }
 
+    public static void zestawB() {
+        final BoundingBox boundingBox = new BoundingBox(new MyPair(0.0, 400.0), new MyPair(0.0, 200.0));
+
+        final Double jump = 1.0;
+
+        MatrixSpace matrixSpace = new MatrixSpace(
+                //                                  rows          columns
+                MatrixBuilder.buildIntegerMatrix((int) (201/jump), (int) (401/jump)),
+                MatrixBuilder.buildDoubleMatrix((int) (201/jump), (int) (401/jump)),
+                boundingBox,
+                jump
+        );
+
+        final Obstacle obstacle1 = new Obstacle()
+                .addNewObstaclePoint(0.0, 50.0)
+                .addNewObstaclePoint(100.0, 50.0)
+                .addNewObstaclePoint(100.0, 200.0)
+                .addNewObstaclePoint(0.0, 200.0)
+                .addNewObstaclePoint(0.0, 50.0);
+
+        final Obstacle obstacle2 = new Obstacle()
+                .addNewObstaclePoint(300.0, 0.0)
+                .addNewObstaclePoint(400.0, 0.0)
+                .addNewObstaclePoint(400.0, 150.0)
+                .addNewObstaclePoint(300.0, 150.0)
+                .addNewObstaclePoint(300.0, 0.0);
+
+        matrixSpace.addObstacle(obstacle1).addObstacle(obstacle2);
+
+        WariantB wariantB = new WariantB(matrixSpace, 1.99);
+    }
+
+    public static void main(String[] args) {
+
+
+        zestawB();
 
         System.out.println("Hello World!");
     }

@@ -31,14 +31,13 @@ public class MatrixSpace {
         this.obstacles = new ArrayList<>();
         this.box = box;
 
-        this.columns = (int) ((box.getxRange().getY() - box.getxRange().getX()) / jump) + 1;
-        this.rows = (int) ((box.getyRange().getY() - box.getyRange().getX()) / jump) + 1;
+        this.columns = (int) ((box.getxRange().getY() - box.getxRange().getX() + 1.0) / jump);
+        this.rows = (int) ((box.getyRange().getY() - box.getyRange().getX() + 1.0) / jump);
 
         evaluateXY();
     }
 
     public MatrixSpace addObstacle(Obstacle obstacle) {
-        this.obstacles.add(obstacle);
         evaluateObstacleRegions(obstacle);
         return this;
     }
@@ -47,8 +46,8 @@ public class MatrixSpace {
         PotentialPoint[][] potentialPoints = potentialMatrix.getMatrix();
         for (int i = rows-1; i > -1; i--) {
             for (int j = 0; j < columns; j++) {
-                potentialPoints[i][j].setX((j+1)*jump);
-                potentialPoints[i][j].setY(((rows-i))*jump);
+                potentialPoints[i][j].setX((j)*jump);  // for wariant A +1.0
+                potentialPoints[i][j].setY((((rows-i))*jump)-1.0); // for wariant A +0.0
             }
         }
 
@@ -87,11 +86,11 @@ public class MatrixSpace {
                 }
             }
         }
-        evaluateObstacleRegions();
+        fillObstacles();
         putRegionsInPotentialMatrix();
     }
 
-    private void evaluateObstacleRegions() {
+    private void fillObstacles() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (this.regionMatrix.getMatrix()[i][j] == 0 && checkIfFourNeighbors(this.regionMatrix.getMatrix(), i, j)) {
@@ -141,7 +140,7 @@ public class MatrixSpace {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (this.regionMatrix.getMatrix()[i][j] == 1) {
-                    this.potentialMatrix.setPotentialPointIsObstacle(i, j-1, true);
+                    this.potentialMatrix.setPotentialPointIsObstacle(i, j, true); //for wariant A y-1
                 }
             }
         }
@@ -152,7 +151,7 @@ public class MatrixSpace {
     }
 
     private int getIndexY(double y) {
-        return rows - (int) ((y) / this.jump);
+        return rows - (int) ((y+1.0) / this.jump); // for wariant A +0.0
     }
 
     public IntegerMatrix getIntegerMatrix() {
