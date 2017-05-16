@@ -135,7 +135,7 @@ public class WariantB {
     }
 
     public Double calculateIntegral() {
-        //overRelaxation();
+        overRelaxation();
         System.out.println("Calculating integral");
         Double currentIntegralValue = calculateIntegralAtIteration();
         Double diff = 0.0;
