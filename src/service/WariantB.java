@@ -43,54 +43,52 @@ public class WariantB {
     public void evaluateInitialEdgeValues() {
         PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
 
-        for (int i = 0; i <=  0.5/matrixSpace.getJump(); i++) { //lewy a
-            int y = matrixSpace.getRows() - i -1;
+        for (int i = 0; i <= 50; i++) { //lewy a
+            int y = matrixSpace.getRows() - i - 1;
             potentialPoints[y][0].setValue(
-                    1.0 * (i*matrixSpace.getJump() - 0.0)
+                    1.0 * (i * matrixSpace.getJump() - 0.0)
             );
         }
 
-        for (int i = (int) (1.5/matrixSpace.getJump()); i <=  2.0/matrixSpace.getJump(); i++) { //prawy b
-            int y = matrixSpace.getRows() - i-1;
-            potentialPoints[y][matrixSpace.getColumns()-1].setValue(
-                    1.0 * (i*matrixSpace.getJump() - 1.5)
+        for (int i = 150; i <= 200; i++) { //prawy b
+            int y = matrixSpace.getRows() - i - 1;
+            potentialPoints[y][400].setValue(
+                    1.0 * (i * matrixSpace.getJump() - 1.5)
             );
         }
 
         //dolny
-        for (int i = 0; i <=  3.0/matrixSpace.getJump(); i++) { //dolny
-            potentialPoints[matrixSpace.getRows()-1][i].setValue(
+        for (int i = 0; i <= 300; i++) { //dolny
+            potentialPoints[200][i].setValue(
                     potentialPoints[0][0].getValue()
             );
         }
-        for (int i = 0; i <=  1.5/matrixSpace.getJump(); i++) { //dolny
-            potentialPoints[matrixSpace.getRows()-i-1][(int) (3.0/matrixSpace.getJump())].setValue(
+        for (int i = 50; i <= 200; i++) { //dolny
+            potentialPoints[i][300].setValue(
                     potentialPoints[0][0].getValue()
             );
         }
-        for (int i = (int) (3.0/matrixSpace.getJump()); i <=  4.0/matrixSpace.getJump(); i++) { //dolny
-            potentialPoints[(int) (matrixSpace.getRows()-1.5/matrixSpace.getJump())][i].setValue(
+        for (int i = 300; i <= 400; i++) { //dolny
+            potentialPoints[50][i].setValue(
                     potentialPoints[0][0].getValue()
             );
         }
 
         //gorny
-        for (int i = 0; i <=  1.0/matrixSpace.getJump(); i++) { //dolny
-            int y = (int) (matrixSpace.getRows() - 0.5/matrixSpace.getJump());
-            potentialPoints[y-1][i].setValue(
-                    potentialPoints[y-1][0].getValue()
+        for (int i = 0; i <= 100; i++) { //dolny
+            int y = 150;
+            potentialPoints[y][i].setValue(
+                    potentialPoints[150][0].getValue()
             );
         }
-        for (int i = (int) (0.5/matrixSpace.getJump()); i <=  2.0/matrixSpace.getJump(); i++) { //dolny
-            int y = (int) (matrixSpace.getRows() - 0.5/matrixSpace.getJump());
-            potentialPoints[matrixSpace.getRows()-i-1][(int) (1.0/matrixSpace.getJump())].setValue(
-                    potentialPoints[y-1][0].getValue()
+        for (int i = 0; i <= 150; i++) { //dolny
+            potentialPoints[i][100].setValue(
+                    potentialPoints[150][0].getValue()
             );
         }
-        for (int i = (int) (1.0/matrixSpace.getJump()); i <=  4.0/matrixSpace.getJump(); i++) { //dolny
-            int y = (int) (matrixSpace.getRows() - 0.5/matrixSpace.getJump());
+        for (int i = 100; i <= 400; i++) { //dolny
             potentialPoints[0][i].setValue(
-                    potentialPoints[y-1][0].getValue()
+                    potentialPoints[150][0].getValue()
             );
         }
         matrixSpace.getDoubleMatrix().setMatrix(potentialPoints);
@@ -106,7 +104,7 @@ public class WariantB {
         for (int i = 1; i < potentialPoints.length - 1; i++) {
             for (int j = 1; j < potentialPoints[0].length - 1; j++) {
                 if (!matrixSpace.getDoubleMatrix().getMatrix()[i][j].getObstacle()) {
-                    Double value = (1.0 - omega)*potentialPoints[i][j].getValue() + omega*(potentialPoints[i - 1][j].getValue() + potentialPoints[i][j - 1].getValue() +
+                    Double value = (1.0 - omega) * potentialPoints[i][j].getValue() + omega * (potentialPoints[i - 1][j].getValue() + potentialPoints[i][j - 1].getValue() +
                             potentialPoints[i + 1][j].getValue() + potentialPoints[i][j + 1].getValue()) / 4.0;
                     potentialPoints[i][j].setValue(value);
                 }
@@ -121,21 +119,19 @@ public class WariantB {
 
         Double a = 0.0;
 
-        for (int i = 1; i < potentialPoints.length - 1; i+=2) {
+        for (int i = 1; i < potentialPoints.length - 1; i += 2) {
             for (int j = 1; j < potentialPoints[0].length - 1; j++) {
                 if (!matrixSpace.getDoubleMatrix().getMatrix()[i][j].getObstacle()) {
-                    a += Math.pow(potentialPoints[i + 1][j].getValue() - potentialPoints[i - 1][j].getValue(), 2.0) +
-                            Math.pow(potentialPoints[i][j + 1].getValue() - potentialPoints[i][j - 1].getValue(), 2.0);
+                    a += (1.0 / 8.0) * (Math.pow(potentialPoints[i][j + 1].getValue() - potentialPoints[i][j - 1].getValue(), 2.0) +
+                            Math.pow(potentialPoints[i - 1][j].getValue() - potentialPoints[i + 1][j].getValue(), 2.0));
                 }
             }
         }
-        overRelaxation();
-
-        return (1.0 / 8.0) * a;
+        return a;
     }
 
     public Double calculateIntegral() {
-        overRelaxation();
+        //overRelaxation();
         System.out.println("Calculating integral");
         Double currentIntegralValue = calculateIntegralAtIteration();
         Double diff = 0.0;
@@ -146,10 +142,11 @@ public class WariantB {
         this.iterationIntegralContainer.add(k++, currentIntegralValue);
 
         do {
+            overRelaxation();
             Double newIntegralValue = calculateIntegralAtIteration();
             this.iterationIntegralContainer.add(k++, newIntegralValue);
 
-            diff = Math.abs(newIntegralValue - currentIntegralValue)/currentIntegralValue;
+            diff = Math.abs(newIntegralValue - currentIntegralValue) / currentIntegralValue;
             currentIntegralValue = newIntegralValue;
             System.out.println("Calculating integral diff : " + diff);
         } while (diff > 10e-10);
@@ -174,16 +171,16 @@ public class WariantB {
     public void evaluateEdgeDirchlet() {
         PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
 
-        for (int i = 0; i <=  0.5/matrixSpace.getJump(); i++) { //lewy a
-            int y = matrixSpace.getRows() - i -1;
+        for (int i = 0; i <= 0.5 / matrixSpace.getJump(); i++) { //lewy a
+            int y = matrixSpace.getRows() - i - 1;
             potentialPoints[y][0].setValue(
                     1.0 * 0.0
             );
         }
 
-        for (int i = (int) (1.5/matrixSpace.getJump()); i <=  2.0/matrixSpace.getJump(); i++) { //prawy b
-            int y = matrixSpace.getRows() - i-1;
-            potentialPoints[y][matrixSpace.getColumns()-1].setValue(
+        for (int i = (int) (1.5 / matrixSpace.getJump()); i <= 2.0 / matrixSpace.getJump(); i++) { //prawy b
+            int y = matrixSpace.getRows() - i - 1;
+            potentialPoints[y][matrixSpace.getColumns() - 1].setValue(
                     1.0 * (matrixSpace.getJump() * 400)
             );
         }
@@ -193,50 +190,50 @@ public class WariantB {
     public void evaluateEdgeNeumann() {
         PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
 
-        for (int i = 1; i <=  99; i++) { //lewy a
+        for (int i = 1; i <= 99; i++) { //lewy a
             int y = 150;
             potentialPoints[y][i].setValue(
-                    potentialPoints[y+1][i].getValue()
+                    potentialPoints[y + 1][i].getValue()
             );
         }
 
-        for (int i = 1; i <  150; i++) { //lewy a
+        for (int i = 1; i < 150; i++) { //lewy a
             int x = 100;
             potentialPoints[i][x].setValue(
-                    potentialPoints[i][x+1].getValue()
+                    potentialPoints[i][x + 1].getValue()
             );
         }
 
-        for (int i = 101; i <=  399; i++) { //lewy a
+        for (int i = 101; i <= 399; i++) { //lewy a
             int y = 0;
             potentialPoints[y][i].setValue(
-                    potentialPoints[y+1][i].getValue()
+                    potentialPoints[y + 1][i].getValue()
             );
         }
 
-        for (int i = 1; i <=  299; i++) { //lewy a
+        for (int i = 1; i <= 299; i++) { //lewy a
             int y = 200;
             potentialPoints[y][i].setValue(
-                    potentialPoints[y-1][i].getValue()
+                    potentialPoints[y - 1][i].getValue()
             );
         }
 
-        for (int i = 199; i >  50; i--) { //lewy a
+        for (int i = 199; i > 50; i--) { //lewy a
             int x = 300;
             potentialPoints[i][x].setValue(
-                    potentialPoints[i][x-1].getValue()
+                    potentialPoints[i][x - 1].getValue()
             );
         }
 
-        for (int i = 301; i <=  399; i++) { //lewy a
+        for (int i = 301; i <= 399; i++) { //lewy a
             int y = 50;
             potentialPoints[y][i].setValue(
-                    potentialPoints[y-1][i].getValue()
+                    potentialPoints[y - 1][i].getValue()
             );
         }
 
-        potentialPoints[150][100].setValue((potentialPoints[151][100].getValue() + potentialPoints[150][101].getValue())/2.0);
-        potentialPoints[50][300].setValue((potentialPoints[49][300].getValue() + potentialPoints[50][299].getValue())/2.0);
+        potentialPoints[150][100].setValue((potentialPoints[151][100].getValue() + potentialPoints[150][101].getValue()) / 2.0);
+        potentialPoints[50][300].setValue((potentialPoints[49][300].getValue() + potentialPoints[50][299].getValue()) / 2.0);
 
         matrixSpace.getDoubleMatrix().setMatrix(potentialPoints);
     }

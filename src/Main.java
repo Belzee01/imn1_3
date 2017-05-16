@@ -131,15 +131,6 @@ public class Main {
         WariantB wariantB1 = new WariantB(matrixSpace, 1.9, NEUMANN);
         wariantB1.calculateIntegral();
 
-        PotentialPoint[][] potentialPoints = wariantB1.getMatrixSpace().getDoubleMatrix().getMatrix();
-
-        for (int i = 0; i < potentialPoints.length; i++) {
-            for (int j = 0; j < potentialPoints[0].length; j++) {
-                System.out.print(potentialPoints[i][j].getValue() + "\t\t");
-            }
-            System.out.println();
-        }
-
         temp = wariantB1.getMatrixSpace().getDoubleMatrix().getMatrix();
 
         CustomFileWriter.writeToFile(
