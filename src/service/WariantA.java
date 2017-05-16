@@ -80,7 +80,7 @@ public class WariantA {
 
         PotentialPoint[][] potentialPoints = matrixSpace.getDoubleMatrix().getMatrix();
 
-        for (int i = 1; i < potentialPoints.length - 1; i++) {
+        for (int i = potentialPoints.length - 2; i > 0; i--) {
             for (int j = 1; j < potentialPoints[0].length - 1; j++) {
                 if (!matrixSpace.getDoubleMatrix().getMatrix()[i][j].getObstacle()) {
                     Double value = (potentialPoints[i - 1][j].getValue() + potentialPoints[i][j - 1].getValue() +
