@@ -48,7 +48,7 @@ public class MatrixSpace {
         for (int i = rows-1; i > -1; i--) {
             for (int j = 0; j < columns; j++) {
                 potentialPoints[i][j].setX((j)*jump);  // for wariant A +1.0
-                potentialPoints[i][j].setY((((rows-i))*jump)-1.0); // for wariant A +0.0
+                potentialPoints[i][j].setY((((rows-i)-1)*jump)); // for wariant A +0.0
             }
         }
 
