@@ -4,7 +4,7 @@ set xl 'os X'
 set yl 'os Y'
 set view map
 set size ratio -1
-set title 'Zad2. Przeplyw potencjalny'
+set title 'Zad1. Przeplyw potencjalny'
 set contours
 set contour base
 set cntrparam levels 10
@@ -31,7 +31,7 @@ set xl 'os X'
 set yl 'os Y'
 set view map
 set size ratio -1
-set title 'Zad2. Przeplyw potencjalny'
+set title 'Zad2. Linie strumienia'
 set contours
 set contour base
 set cntrparam levels 30
